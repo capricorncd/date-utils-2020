@@ -9,6 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { ProgressPlugin, BannerPlugin } = require('webpack')
 const EslintWebpackPlugin = require('eslint-webpack-plugin')
 const pkg = require('./package.json')
+const { formatDate } = require('./dist/date-utils-2020')
 
 const argsArr = process.argv.slice(2)
 
@@ -53,10 +54,10 @@ if (isProd) {
     plugins: [
       new CleanWebpackPlugin(),
       new BannerPlugin([
-        `${pkg.name} ${pkg.version}`,
+        `${pkg.name} v${pkg.version}`,
         `Author: ${pkg.author}`,
         `Repository: ${pkg.homepage}`,
-        // `Released on: ${formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')}`
+        `Released on: ${formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')}`
       ].join('\n'))
     ]
   })
