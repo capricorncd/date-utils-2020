@@ -32,10 +32,23 @@ console.log(result)
 
 |Method|Parameters|Description|
 |:--|:--|:--|
-|formatDate|(date: any, fmt: string, languagePack?: object)|return `string`|
+|formatDate|(date: any, fmt: string, langPackage?: langPackage)|return `string`|
 |toDate|(s: any)|return `Date` or `null`|
 |isNumberLike|(n: any)| return Boolean `true` or `false`|
 |isString|(n: any)| return Boolean `true` or `false`|
 |toTwoDigits|(n: number)| return `string`|
 
+#### langPackage
 
+|Props|Type|Description|
+|:--|:--|:--|
+|weeks|`string[]`|Example: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`, Default: `['日', '一', '二', '三', '四', '五', '六']`|
+
+```javascript
+const langPackage = {
+  weeks: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']
+}
+
+formatDate(new Date(), 'yyyy/MM/dd(W) hh:mm:ss')
+// 2020/12/05(土曜日) 12:22:52
+```
