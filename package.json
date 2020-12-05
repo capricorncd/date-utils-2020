@@ -1,10 +1,12 @@
 {
   "name": "date-utils-2020",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "date utils 2020, format(date: Date, formatter: string)/toDate(a?: any)...",
-  "main": "src/index.js",
+  "main": "dist/date-utils-2020.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/index.js",
+    "dev": "webpack serve",
+    "build": "webpack --mode production"
   },
   "types": "types/index.d.ts",
   "repository": {
@@ -16,12 +18,30 @@
     "date",
     "utils",
     "toDate",
-    "format"
+    "formatDate"
   ],
   "author": "Capricorncd",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/capricorncd/date-utils-2020/issues"
   },
-  "homepage": "https://github.com/capricorncd/date-utils-2020#readme"
+  "homepage": "https://github.com/capricorncd/date-utils-2020#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^7.14.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "eslint-webpack-plugin": "^2.4.1",
+    "html-webpack-plugin": "^4.5.0",
+    "webpack": "^5.9.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.4.0"
+  }
 }

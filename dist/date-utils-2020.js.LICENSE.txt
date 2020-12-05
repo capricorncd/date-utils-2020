@@ -1,0 +1,5 @@
+/*!
+ * date-utils-2020 0.0.2
+ * Repository: https://github.com/capricorncd/date-utils-2020#readme
+ * Author: Capricorncd
+ */
