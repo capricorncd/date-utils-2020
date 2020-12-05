@@ -14,7 +14,7 @@ const DEF_LANGUAGE = {
  * @param srcDate
  * @param fmt
  * @param langPackage
- * @returns {number|*}
+ * @returns {string}
  */
 function formatDate(srcDate, fmt, langPackage) {
   const date = toDate(srcDate)

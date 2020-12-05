@@ -25,7 +25,7 @@ export function isString(s) {
 /**
  * to two digits
  * @param n
- * @returns {*}
+ * @returns {string}
  */
 export function toTwoDigits(n) {
   n += ''
