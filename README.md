@@ -28,6 +28,14 @@ console.log(result)
 // 2020/12/04 五
 ```
 
+```javascript
+const { formatDate } = require('date-utils-2020')
+
+const result = formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss')
+console.log(result)
+// 2020/12/05 16:07:43
+```
+
 ## Methods
 
 |Method|Parameters|Description|
