@@ -9,8 +9,8 @@
  * @param n
  * @returns {boolean}
  */
-export function isNumberLike(n) {
-  return /^-?\d+\.?\d+$/.test(n)
+export function isNumberLike<T>(n: T): boolean {
+  return typeof n === 'number' || (typeof n === 'string' && /^-?(\d+|\d+\.\d+)$/.test(n))
 }
 
 /**
@@ -18,7 +18,7 @@ export function isNumberLike(n) {
  * @param s
  * @returns {boolean}
  */
-export function isString(s) {
+export function isString<T>(s: T): boolean {
   return typeof s === 'string'
 }
 
@@ -27,7 +27,7 @@ export function isString(s) {
  * @param n
  * @returns {string}
  */
-export function toTwoDigits(n) {
-  n += ''
-  return n[1] ? n : '0' + n
+export function toTwoDigits<T>(n: T): string {
+  const str = n + ''
+  return str[1] ? str : '0' + str
 }

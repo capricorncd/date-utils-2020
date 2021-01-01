@@ -3,10 +3,12 @@
  * https://github.com/capricorncd
  * Date: 2020-12-04 22:10
  */
-import { isNumberLike, isString, toTwoDigits } from './utils'
+import { isNumberLike, toTwoDigits } from './helper'
+import * as Types from '../types/index'
 
-const DEF_LANGUAGE = {
-  weeks: ['日', '一', '二', '三', '四', '五', '六']
+const DEF_LANGUAGE: Types.ILangPackage = {
+  // weeks: ['日', '一', '二', '三', '四', '五', '六']
+  weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 }
 
 /**
@@ -16,11 +18,11 @@ const DEF_LANGUAGE = {
  * @param langPackage
  * @returns {string}
  */
-function formatDate(srcDate, fmt, langPackage) {
+function formatDate<T>(srcDate: T, fmt: string, langPackage: Types.ILangPackage): string {
   const date = toDate(srcDate)
-  if (!date || !fmt) return isString(srcDate) ? srcDate : (srcDate + '')
+  if (!date || !fmt) return srcDate + ''
   // timestamp
-  if (fmt === 'timestamp') return +date
+  if (fmt === 'timestamp') return date.getTime().toString()
   let $1
   if (/(y+)/i.test(fmt)) {
     $1 = RegExp.$1
@@ -58,33 +60,32 @@ function formatDate(srcDate, fmt, langPackage) {
 
 /**
  * to date
- * @param str yyyy/MM/dd, yyyy-MM-dd, yyyyMMdd, timestamp
+ * @param input yyyy/MM/dd, yyyy-MM-dd, yyyyMMdd, timestamp
  * @returns {Date}
  */
-function toDate(str) {
-  if (!str) return null
-  if (str instanceof Date) return str
-  let date = null
+function toDate<T>(input: T): null | Date {
+  if (!input) return null
+  if (input instanceof Date) return input
+  let str = input + ''
   if (isNumberLike(str)) {
-    const s = str + ''
-    const len = s.length
+    const len = str.length
     // yyyyMMdd
     if (len === 8) {
-      date = new Date([s.substr(0, 4), s.substr(4, 2), s.substr(6, 2)].join('/'))
+      return new Date([str.substr(0, 4), str.substr(4, 2), str.substr(6, 2)].join('/'))
     }
     // yyyyMM
     else if (len === 6) {
-      date = new Date([s.substr(0, 4), s.substr(4, 2), '01'].join('/'))
+      return new Date([str.substr(0, 4), str.substr(4, 2), '01'].join('/'))
     }
     // yyyy
     else if (len === 4) {
-      date = new Date(s + '/01/01')
+      return new Date(str + '/01/01')
     }
-    // timestamp
+    // Other cases are handled as timestamp
     else {
-      date = new Date(str)
+      return new Date(str)
     }
-  } else if (isString(str)) {
+  } else {
     // replace 年月日
     str = str.replace(/[年月日]/g, (match) => {
       return match === '日' ? '' : '/'
@@ -97,25 +98,24 @@ function toDate(str) {
       .replace(/\s+/g, ' ')
     /** yyyy/MM/dd yyyy-MM-dd */
     if (/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/.test(str)) {
-      date = new Date([RegExp.$1, RegExp.$2, RegExp.$3].join('/'))
+      return new Date([RegExp.$1, RegExp.$2, RegExp.$3].join('/'))
     }
     /** yyyy/MM yyyy-MM */
     else if (/^(\d{4})[-/](\d{1,2})$/.test(str)) {
-      date = new Date([RegExp.$1, RegExp.$2, '01'].join('/'))
+      return new Date([RegExp.$1, RegExp.$2, '01'].join('/'))
     } else {
-      date = new Date(str)
+      const date = new Date(str)
       if (isNaN(date.getFullYear())) {
-        date = null
+        return null
       }
+      return date
     }
   }
-  return date
 }
 
 export {
   formatDate,
   isNumberLike,
-  isString,
   toDate,
   toTwoDigits
 }

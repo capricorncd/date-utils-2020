@@ -20,7 +20,7 @@ const isProd = argsArr.includes('production')
 const baseConfig = {
   mode: isProd ? 'production' : 'development',
   entry: {
-    'date-utils-2020': resolve(__dirname, './src/index.js')
+    'date-utils-2020': resolve(__dirname, './src/index.ts')
   },
   output: {
     path: resolve(__dirname, './dist'),
@@ -37,6 +37,11 @@ const baseConfig = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/
+      },
       {
         test: /\.js?$/,
         loader: 'babel-loader'
@@ -68,7 +73,7 @@ if (isProd) {
     },
     plugins: [
       new EslintWebpackPlugin({
-        extensions: ['js'],
+        extensions: ['ts'],
         fix: true
       })
     ]

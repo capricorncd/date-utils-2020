@@ -8,9 +8,7 @@ module.exports = {
     browser: true,
     node: true
   },
-  globals: {
-    THREE: true
-  },
+  globals: {},
   parserOptions: {
     parser: 'babel-eslint',
     // https://eslint.org/docs/rules/rest-spread-spacing
@@ -19,12 +17,19 @@ module.exports = {
     sourceType: 'module'
   },
   extends: [
-    'standard'
+    'standard',
+    'plugin:@typescript-eslint/recommended'
   ],
-  plugins: [],
+  parser: '@typescript-eslint/parser',
+  plugins: [
+    '@typescript-eslint'
+  ],
   rules: {
     'space-before-function-paren': 0,
     // 'brace-style': [2, 'stroustrup', { allowSingleLine: true }],
-    'brace-style': 0
+    'brace-style': 0,
+    // '@typescript-eslint/explicit-function-return-type': 'off',
+    // '@typescript-eslint/no-explicit-any': 'off',
+    // '@typescript-eslint/no-use-before-define': 'off',
   }
 }

@@ -29,6 +29,7 @@ console.log(result)
 ```
 
 ```javascript
+// node.js
 const { formatDate } = require('date-utils-2020')
 
 const result = formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss')
@@ -36,24 +37,46 @@ console.log(result)
 // 2020/12/05 16:07:43
 ```
 
+```javascript
+import { formatDate } from 'date-utils-2020'
+constole.log(formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss'))
+```
+
 ## Methods
 
 |Method|Parameters|Description|
 |:--|:--|:--|
-|formatDate|(date: any, fmt: string, langPackage?: langPackage)|return `string`|
+|formatDate|(date: any, format: string, langPackage?: ILangPackage)|return `string`|
 |toDate|(s: any)|return `Date` or `null`|
-|isNumberLike|(n: any)| return Boolean `true` or `false`|
-|isString|(n: any)| return Boolean `true` or `false`|
+|isNumberLike|(n: any)| return boolean `true` or `false`|
 |toTwoDigits|(n: number)| return `string`|
+
+#### format
+
+Date Formats
+
+|format|meaning|Example|
+|:--|:--|:--|:--|
+|yyyy/yy|year|`2021`/`21`|
+|MM/M|month|`01`/`1`|
+|dd/d|day|`01`/`1`|
+|hh/h|hour|`01`/`1`|
+|mm/m|minute|`01`/`1`|
+|ss/s|second|`01`/`1`|
+|w|week|`[0, 1, 2, 3, 4, 5, 6]`|
+|W|week|`['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`|
+|a|am/pm|`am`|
+|A|AM/PM|`AM`|
 
 #### langPackage
 
 |Props|Type|Description|
 |:--|:--|:--|
-|weeks|`string[]`|Example: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`, Default: `['日', '一', '二', '三', '四', '五', '六']`|
+|weeks|`string[]`|Example: `['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']`, Default: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`|
 
 ```javascript
 const langPackage = {
+  // ['日', '一', '二', '三', '四', '五', '六']
   weeks: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']
 }
 
