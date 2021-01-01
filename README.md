@@ -53,7 +53,7 @@ constole.log(formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss'))
 
 #### format
 
-Date Formats
+Date Formats, Example `yyyy-MM-dd hh:mm:ss W` => `2021-01-01 01:01:01 Fri`
 
 |format|meaning|Example|
 |:--|:--|:--|
