@@ -56,7 +56,7 @@ constole.log(formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss'))
 Date Formats
 
 |format|meaning|Example|
-|:--|:--|:--|:--|
+|:--|:--|:--|
 |yyyy/yy|year|`2021`/`21`|
 |MM/M|month|`01`/`1`|
 |dd/d|day|`01`/`1`|
