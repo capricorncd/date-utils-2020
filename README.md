@@ -1,6 +1,10 @@
 # date-utils-2020
 
-date utils 2020, format(date: Date, formatter: string)/toDate(a?: any)...
+date utils 2020, format(s: any, formatter: string)/toDate(s?: any)...
+
+> Note:
+
+> When the parameter `s` is a string: when it is a string of `yyyyMMdd`/`yyyyMM`/`yyyy`, it is processed as `yyyyMMdd`/`yyyyMM01`/`yyyy0101`, and other string numbers are processed as a `timestamp`.
 
 <p align="left">
   <a href="https://npmcharts.com/compare/date-utils-2020?minimal=true"><img src="https://img.shields.io/npm/dm/date-utils-2020.svg?sanitize=true" alt="Downloads"></a>
@@ -25,7 +29,7 @@ console.log(date)
 
 const result = formatDate('2020-12-04', 'yyyy/MM/dd W')
 console.log(result)
-// 2020/12/04 五
+// 2020/12/04 Fri
 ```
 
 ```javascript
@@ -35,6 +39,14 @@ const { formatDate } = require('date-utils-2020')
 const result = formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss')
 console.log(result)
 // 2020/12/05 16:07:43
+
+// timestamp
+console.log(formatDate(20210101, 'yyyy-MM-dd hh:mm:ss'))
+// 1970-01-01 14:36:50
+
+// yyyyMMdd
+console.log(formatDate('20210101', 'yyyy-MM-dd hh:mm:ss'))
+// 2021-01-01 00:00:00
 ```
 
 ```javascript
@@ -47,9 +59,7 @@ constole.log(formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss'))
 |Method|Parameters|Description|
 |:--|:--|:--|
 |formatDate|(date: any, format: string, langPackage?: ILangPackage)|return `string`|
-|toDate|(s: any)|return `Date` or `null`|
-|isNumberLike|(n: any)| return boolean `true` or `false`|
-|toTwoDigits|(n: number)| return `string`|
+|toDate|(s: any)|return `Date` or `null`. When the parameter `s` is a string: when it is a string of `yyyyMMdd`/`yyyyMM`/`yyyy`, it is processed as `yyyyMMdd`/`yyyyMM01`/`yyyy0101`, and other string numbers are processed as a `timestamp`.|
 
 #### format
 

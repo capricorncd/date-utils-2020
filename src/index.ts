@@ -3,7 +3,7 @@
  * https://github.com/capricorncd
  * Date: 2020-12-04 22:10
  */
-import { isNumberLike, toTwoDigits } from './helper'
+import { toTwoDigits } from './helper'
 import * as Types from '../types/index'
 
 const DEF_LANGUAGE: Types.ILangPackage = {
@@ -18,7 +18,7 @@ const DEF_LANGUAGE: Types.ILangPackage = {
  * @param langPackage
  * @returns {string}
  */
-function formatDate<T>(srcDate: T, fmt: string, langPackage: Types.ILangPackage): string {
+function formatDate<T>(srcDate: T, fmt: string, langPackage?: Types.ILangPackage): string {
   const date = toDate(srcDate)
   if (!date || !fmt) return srcDate + ''
   // timestamp
@@ -64,58 +64,62 @@ function formatDate<T>(srcDate: T, fmt: string, langPackage: Types.ILangPackage)
  * @returns {Date}
  */
 function toDate<T>(input: T): null | Date {
-  if (!input) return null
   if (input instanceof Date) return input
-  let str = input + ''
-  if (isNumberLike(str)) {
-    const len = str.length
-    // yyyyMMdd
-    if (len === 8) {
-      return new Date([str.substr(0, 4), str.substr(4, 2), str.substr(6, 2)].join('/'))
-    }
-    // yyyyMM
-    else if (len === 6) {
-      return new Date([str.substr(0, 4), str.substr(4, 2), '01'].join('/'))
-    }
-    // yyyy
-    else if (len === 4) {
-      return new Date(str + '/01/01')
-    }
-    // Other cases are handled as timestamp
-    else {
-      return new Date(str)
-    }
-  } else {
-    // replace 年月日
-    str = str.replace(/[年月日]/g, (match) => {
-      return match === '日' ? '' : '/'
-    })
-    // remove cn/jp week, comment
-    // 2020/08/22(星期六) 11:56:21
-    // Sat Aug 22 2020 11:56:24 GMT+0900 (Japan Standard Time)
-    str = str.replace(/[(（（].*?[)））]/g, ' ')
-      .replace(/\bam|pm\b/ig, ' ')
-      .replace(/\s+/g, ' ')
-    /** yyyy/MM/dd yyyy-MM-dd */
-    if (/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/.test(str)) {
-      return new Date([RegExp.$1, RegExp.$2, RegExp.$3].join('/'))
-    }
-    /** yyyy/MM yyyy-MM */
-    else if (/^(\d{4})[-/](\d{1,2})$/.test(str)) {
-      return new Date([RegExp.$1, RegExp.$2, '01'].join('/'))
-    } else {
-      const date = new Date(str)
-      if (isNaN(date.getFullYear())) {
-        return null
+  // fix: In the case of an array with only one element
+  // Example: ['2021/01/02'].toString() => '2021/01/02'
+  if (typeof input === 'number') {
+    return new Date(input)
+  } else if (typeof input === 'string') {
+    let str = input.trim()
+    // string number
+    if (/^\d+$/.test(str)) {
+      const len = str.length
+      // yyyyMMdd
+      if (len === 8) {
+        return new Date([str.substr(0, 4), str.substr(4, 2), str.substr(6, 2)].join('/'))
       }
-      return date
+      // yyyyMM
+      else if (len === 6) {
+        return new Date([str.substr(0, 4), str.substr(4, 2), '01'].join('/'))
+      }
+      // yyyy
+      else if (len === 4) {
+        return new Date(str + '/01/01')
+      }
+      // Other cases are handled as timestamp
+      else {
+        // Note that the results of new Date(0) and new Date('0') are different
+        return new Date(parseInt(input))
+      }
+    } else {
+      // replace 年月日
+      str = str
+        .replace(/[年月日]/g, (match) => {
+          return match === '日' ? '' : '/'
+        })
+        // remove cn/jp week, comment
+        // 2020/08/22(星期六) 11:56:21
+        // Sat Aug 22 2020 11:56:24 GMT+0900 (Japan Standard Time)
+        .replace(/[(（（].*?[)））]/g, ' ')
+        .replace(/\bam|pm\b/ig, ' ')
+        .replace(/\s+/g, ' ')
+      /** yyyy/MM/dd yyyy-MM-dd */
+      if (/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/.test(str)) {
+        return new Date([RegExp.$1, RegExp.$2, RegExp.$3].join('/'))
+      }
+      /** yyyy/MM yyyy-MM */
+      else if (/^(\d{4})[-/](\d{1,2})$/.test(str)) {
+        return new Date([RegExp.$1, RegExp.$2, '01'].join('/'))
+      } else {
+        const date = new Date(str)
+        return isNaN(date.getFullYear()) ? null : date
+      }
     }
   }
+  return null
 }
 
 export {
   formatDate,
-  isNumberLike,
-  toDate,
-  toTwoDigits
+  toDate
 }
