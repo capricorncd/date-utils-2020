@@ -45,8 +45,8 @@ console.log(formatDate(20210101, 'yyyy-MM-dd hh:mm:ss'))
 // 1970-01-01 14:36:50
 
 // yyyyMMdd
-console.log(formatDate('20210101', 'yyyy-MM-dd hh:mm:ss'))
-// 2021-01-01 00:00:00
+console.log(formatDate('20210101', 'yyyy-MM-dd hh:mm:ss g'))
+// 2021-01-01 00:00:00 GMT+0900
 ```
 
 ```javascript
@@ -77,6 +77,8 @@ Date Formats, Example `yyyy-MM-dd hh:mm:ss W` => `2021-01-01 01:01:01 Fri`
 |W|week|`['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`|
 |a|am/pm|`am`|
 |A|AM/PM|`AM`|
+|g|GMT(Greenwich Mean Time)|`GMT+0900`|
+|G|GMT(Greenwich Mean Time)|`GMT+0900 (Japan Standard Time)`, Safari `GMT+0900 (JST)`|
 
 #### langPackage
 

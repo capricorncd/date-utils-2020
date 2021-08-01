@@ -1,6 +1,6 @@
 /*!
- * date-utils-2020 v1.0.1
+ * date-utils-2020 v1.0.2
  * Author: Capricorncd
  * Repository: https://github.com/capricorncd/date-utils-2020#readme
- * Released on: 2021-01-02 21:48:43
+ * Released on: 2021-08-01 15:02:46
  */

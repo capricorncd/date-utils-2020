@@ -16,5 +16,5 @@ console.log(formatDate(new Date(), 'yy-M-d h:m:s'))
 console.log(toDate(0).toLocaleString())
 console.log(formatDate(0, 'yyyy-MM-dd hh:mm:ss'))
 
-console.log(formatDate(20210101, 'yyyy-MM-dd hh:mm:ss'))
-console.log(formatDate('20210101', 'yyyy-MM-dd hh:mm:ss'))
+console.log(formatDate(20210101, 'yyyy-MM-dd hh:mm:ss g'))
+console.log(formatDate('20210101', 'yyyy-MM-dd hh:mm:ss G'))

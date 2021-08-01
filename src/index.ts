@@ -55,6 +55,17 @@ function formatDate<T>(srcDate: T, fmt: string, langPackage?: Types.ILangPackage
       fmt = fmt.replace($1, ($1.length === 1) ? str : toTwoDigits(str))
     }
   }
+
+  // GMT(Greenwich Mean Time)
+  // Chrome: Sun Aug 01 2021 14:20:04 GMT+0900 (Japan Standard Time)
+  // FireFox: Sun Aug 01 2021 14:37:53 GMT+0900 (日本标准时间)
+  // Safari: Sun Aug 01 2021 14:37:08 GMT+0900 (JST)
+  if (/(g)/i.test(fmt)) {
+    const gmt = date.toString().split(/\s+/).slice(5)
+    const isLowerCase = fmt.includes('g')
+    fmt = fmt.replace(/g/i, isLowerCase ? gmt[0] : gmt.join(' '))
+  }
+
   return fmt
 }
 
