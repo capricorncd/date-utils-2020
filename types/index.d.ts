@@ -12,6 +12,4 @@ export function formatDate(srcDate: any, fmt: string, langPackage?: ILangPackage
 
 export function toDate(date: any): Date | null;
 
-export function isNumberLike(n: any): boolean;
-
 export function toTwoDigits(n: any): string;

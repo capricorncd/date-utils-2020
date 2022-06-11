@@ -132,5 +132,6 @@ function toDate<T>(input: T): null | Date {
 
 export {
   formatDate,
-  toDate
+  toDate,
+  toTwoDigits,
 }
