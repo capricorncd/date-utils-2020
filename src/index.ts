@@ -13,20 +13,20 @@ const DEF_LANGUAGE: Types.ILangPackage = {
 
 /**
  * format date
- * @param srcDate
+ * @param input
  * @param fmt
  * @param langPackage
  * @returns {string}
  */
-function formatDate<T>(srcDate: T, fmt: string, langPackage?: Types.ILangPackage): string {
-  const date = toDate(srcDate)
-  if (!date || !fmt) return srcDate + ''
+function formatDate<T>(input: T, fmt: string, langPackage?: Types.ILangPackage): string {
+  const date = toDate(input)
+  if (!date || !fmt) return String(input)
   // timestamp
   if (fmt === 'timestamp') return date.getTime().toString()
-  let $1
+
   if (/(y+)/i.test(fmt)) {
-    $1 = RegExp.$1
-    fmt = fmt.replace($1, (date.getFullYear() + '').substr(4 - $1.length))
+    const $1 = RegExp.$1
+    fmt = fmt.replace($1, (date.getFullYear() + '').substring(4 - $1.length))
   }
 
   if (!langPackage || !Array.isArray(langPackage.weeks)) {
@@ -48,6 +48,7 @@ function formatDate<T>(srcDate: T, fmt: string, langPackage?: Types.ILangPackage
     'A+': date.getHours() < 12 ? 'AM' : 'PM'
   }
 
+  let $1
   for (const key in obj) {
     if (new RegExp('(' + key + ')').test(fmt)) {
       $1 = RegExp.$1
@@ -60,7 +61,7 @@ function formatDate<T>(srcDate: T, fmt: string, langPackage?: Types.ILangPackage
   // Chrome: Sun Aug 01 2021 14:20:04 GMT+0900 (Japan Standard Time)
   // FireFox: Sun Aug 01 2021 14:37:53 GMT+0900 (日本标准时间)
   // Safari: Sun Aug 01 2021 14:37:08 GMT+0900 (JST)
-  if (/(g)/i.test(fmt)) {
+  if (/g/i.test(fmt)) {
     const gmt = date.toString().split(/\s+/).slice(5)
     const isLowerCase = fmt.includes('g')
     fmt = fmt.replace(/g/i, isLowerCase ? gmt[0] : gmt.join(' '))
@@ -75,32 +76,38 @@ function formatDate<T>(srcDate: T, fmt: string, langPackage?: Types.ILangPackage
  * @returns {Date}
  */
 function toDate<T>(input: T): null | Date {
-  if (input instanceof Date) return input
+  let result = null
+  if (input instanceof Date) {
+    result = input
+  }
   // fix: In the case of an array with only one element
   // Example: ['2021/01/02'].toString() => '2021/01/02'
-  if (typeof input === 'number') {
-    return new Date(input)
-  } else if (typeof input === 'string') {
+  else if (typeof input === 'number') {
+    // timestamp
+    result = new Date(input)
+  } 
+  // string
+  else if (typeof input === 'string') {
     let str = input.trim()
     // string number
     if (/^\d+$/.test(str)) {
       const len = str.length
       // yyyyMMdd
       if (len === 8) {
-        return new Date([str.substr(0, 4), str.substr(4, 2), str.substr(6, 2)].join('/'))
+        result = new Date([str.substring(0, 4), str.substring(4, 6), str.substring(6, 8)].join('/'))
       }
       // yyyyMM
       else if (len === 6) {
-        return new Date([str.substr(0, 4), str.substr(4, 2), '01'].join('/'))
+        result = new Date([str.substring(0, 4), str.substring(4, 6), '01'].join('/'))
       }
       // yyyy
       else if (len === 4) {
-        return new Date(str + '/01/01')
+        result = new Date(str + '/01/01')
       }
       // Other cases are handled as timestamp
       else {
         // Note that the results of new Date(0) and new Date('0') are different
-        return new Date(parseInt(input))
+        result = new Date(parseInt(input))
       }
     } else {
       // replace 年月日
@@ -116,18 +123,17 @@ function toDate<T>(input: T): null | Date {
         .replace(/\s+/g, ' ')
       /** yyyy/MM/dd yyyy-MM-dd */
       if (/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/.test(str)) {
-        return new Date([RegExp.$1, RegExp.$2, RegExp.$3].join('/'))
+        result = new Date([RegExp.$1, RegExp.$2, RegExp.$3].join('/'))
       }
       /** yyyy/MM yyyy-MM */
       else if (/^(\d{4})[-/](\d{1,2})$/.test(str)) {
-        return new Date([RegExp.$1, RegExp.$2, '01'].join('/'))
+        result = new Date([RegExp.$1, RegExp.$2, '01'].join('/'))
       } else {
-        const date = new Date(str)
-        return isNaN(date.getFullYear()) ? null : date
+        result = new Date(str)
       }
     }
   }
-  return null
+  return result && !isNaN(result.getFullYear()) ? result : null
 }
 
 export {

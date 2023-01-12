@@ -8,6 +8,6 @@
  * @param str
  * @returns {string}
  */
-export function toTwoDigits(str: string): string {
-  return str[1] ? str : '0' + str
+export function toTwoDigits(str: string | number): string {
+  return String(str).padStart(2, '0')
 }
