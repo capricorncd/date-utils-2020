@@ -4,9 +4,13 @@
  * Date: 2020-12-04 22:10
  */
 import { toTwoDigits } from './helper'
-import * as Types from '../types/index'
 
-const DEF_LANGUAGE: Types.ILangPackage = {
+export interface ILangPackage {
+  weeks: string[],
+  [key: string]: any
+}
+
+const DEF_LANGUAGE: ILangPackage = {
   // weeks: ['日', '一', '二', '三', '四', '五', '六']
   weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 }
@@ -18,7 +22,7 @@ const DEF_LANGUAGE: Types.ILangPackage = {
  * @param langPackage
  * @returns {string}
  */
-function formatDate<T>(input: T, fmt: string, langPackage?: Types.ILangPackage): string {
+function formatDate<T>(input: T, fmt: string, langPackage?: ILangPackage): string {
   const date = toDate(input)
   if (!date || !fmt) return String(input)
   // timestamp
@@ -39,10 +43,10 @@ function formatDate<T>(input: T, fmt: string, langPackage?: Types.ILangPackage):
     'h+': date.getHours(),
     'm+': date.getMinutes(),
     's+': date.getSeconds(),
-    // week number
-    'w+': date.getDay(),
-    // week text
-    'W+': langPackage.weeks[date.getDay()],
+    // // week number
+    // 'w+': date.getDay(),
+    // // week text
+    // 'W+': langPackage.weeks[date.getDay()],
     // am/pm
     'a+': date.getHours() < 12 ? 'am' : 'pm',
     'A+': date.getHours() < 12 ? 'AM' : 'PM'
@@ -52,9 +56,15 @@ function formatDate<T>(input: T, fmt: string, langPackage?: Types.ILangPackage):
   for (const key in obj) {
     if (new RegExp('(' + key + ')').test(fmt)) {
       $1 = RegExp.$1
-      const str = obj[key] + ''
+      const str = obj[key as keyof typeof obj] + ''
       fmt = fmt.replace($1, ($1.length === 1) ? str : toTwoDigits(str))
     }
+  }
+
+  // week
+  if (/w+/i.test(fmt)) {
+    const w = date.getDay()
+    fmt = fmt.replace(/w+/i, /W+/.test(fmt) ? langPackage.weeks[w] : String(w))
   }
 
   // GMT(Greenwich Mean Time)

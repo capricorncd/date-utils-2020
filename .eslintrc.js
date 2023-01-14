@@ -10,14 +10,11 @@ module.exports = {
   },
   globals: {},
   parserOptions: {
-    parser: 'babel-eslint',
-    // https://eslint.org/docs/rules/rest-spread-spacing
-    // error  Parsing error: Unexpected token ..
     ecmaVersion: 2020,
     sourceType: 'module'
   },
   extends: [
-    'standard',
+    // 'standard',
     'plugin:@typescript-eslint/recommended'
   ],
   parser: '@typescript-eslint/parser',
