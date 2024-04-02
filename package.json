@@ -1,9 +1,10 @@
 {
   "name": "date-utils-2020",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "date utils 2020, format(date: Date, formatter: string)/toDate(a?: any)...",
   "main": "dist/date-utils-2020.umd.js",
   "module": "dist/date-utils-2020.es.js",
+  "types": "src/index.ts",
   "exports": {
     ".": {
       "import": "./dist/date-utils-2020.es.js",
@@ -16,7 +17,6 @@
     "test": "vitest",
     "lint": "eslint . --fix --ext .ts"
   },
-  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/capricorncd/date-utils-2020.git"
