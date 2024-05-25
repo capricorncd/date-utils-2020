@@ -1,12 +1,12 @@
 {
   "name": "date-utils-2020",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "date utils 2020, format(date: Date, formatter: string)/toDate(a?: any)...",
   "main": "dist/date-utils-2020.umd.js",
-  "module": "dist/date-utils-2020.es.js",
   "types": "src/index.ts",
   "exports": {
     ".": {
+      "types": "./src/index.ts",
       "import": "./dist/date-utils-2020.es.js",
       "require": "./dist/date-utils-2020.umd.js"
     }

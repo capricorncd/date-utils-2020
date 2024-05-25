@@ -1,8 +1,8 @@
 /*!
- * date-utils-2020 v1.1.1
+ * date-utils-2020 v1.1.2
  * Author: Capricorncd
  * Repository: https://github.com/capricorncd/date-utils-2020#readme
- * Released on: 2024/04/02 21:28:40 GMT+0900
+ * Released on: 2024/05/25 22:18:27 GMT+0900
  */
 function l(n) {
   return String(n).padStart(2, "0");
